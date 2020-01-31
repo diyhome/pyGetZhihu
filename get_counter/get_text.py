@@ -22,7 +22,7 @@ def get_json(url, offset=0):
     qid = url.split('/')[-1]
 
     data_res = []
-    # 安装知乎api v4规则拼接json的url
+    # 按照知乎api v4规则拼接json的url
     json_url = 'https://www.zhihu.com/api/v4/questions/{0}/answers?include=data[*].is_normal,admin_closed_comment,reward_info,is_collapsed,annotation_action,annotation_detail,collapse_reason,is_sticky,collapsed_by,suggest_edit,comment_count,can_comment,content,editable_content,voteup_count,reshipment_settings,comment_permission,created_time,updated_time,review_info,relevant_info,question.detail,excerpt,relationship.is_authorized,is_author,voting,is_thanked,is_nothelp,is_labeled,is_recognized;data[].mark_infos[].url;data[].author.follower_count,badge[].topics&limit=5&offset={1}&platform=desktop&sort_by=default'.format(qid, offset)
 
     # 伪装浏览器头并且读取json文件
@@ -37,15 +37,24 @@ def get_json(url, offset=0):
         data = json.loads(json_raw)
         tmp = []
         for index in range(len(data['data'])):
-            tmp.append(data['data'][index]['author']['name'])
-            tmp.append(data['data'][index]['content'])
-            tmp.append(data['data'][index]['voteup_count'])
+            tmp = data_cleaning(data['data'][index])
             data_res.append(tmp)
         logging.debug("paging.is_end:" + str(data['paging']['is_end']))
         if data['paging']['is_end']:
             break
         json_url = data['paging']['next']
     return data_res
+
+# 数据清洗
+def data_cleaning(raw_data):
+    # 如果回答中包含了图片,直接舍弃
+    if "img" in raw_data['content']:
+        return
+    data_tmp = []
+    data_tmp.append(raw_data['author']['name'])
+    data_tmp.append(raw_data['content'])
+    data_tmp.append(raw_data['voteup_count'])
+    return data_tmp
 
 if __name__ == '__main__':
     json_raw = get_json("https://www.zhihu.com/question/315755986")
