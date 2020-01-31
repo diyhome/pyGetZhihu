@@ -48,8 +48,8 @@ def get_json(url, offset=0):
 # 数据清洗
 def data_cleaning(raw_data):
     # 如果回答中包含了图片,直接舍弃
-    if "img" in raw_data['content']:
-        return
+    # if "img" in raw_data['content']:
+    #     return
     data_tmp = []
     data_tmp.append(raw_data['author']['name'])
     data_tmp.append(raw_data['content'])
