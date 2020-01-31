@@ -45,7 +45,7 @@ def get_json(url, offset=0):
         json_url = data['paging']['next']
     return data_res
 
-# 数据清洗
+# 数据选择
 def data_cleaning(raw_data):
     # 如果回答中包含了图片,直接舍弃
     # if "img" in raw_data['content']:
