@@ -18,7 +18,7 @@ fs = logging.StreamHandler()
 logging.basicConfig(level=logging.INFO, format=LOG_FORMAT, datefmt=DATE_FORMAT, handlers=[fp, fs])    # 调用
 
 url = "https://www.zhihu.com/question/339011506"
-ListofInvaild = ['.', ',', '!', '。', '，', '！', '？', '“', '”', '"', '的', '你', '我', '他', '哪些', '她', '偏', '哪', '到', '觉得', '也', '有', '是', '或者']
+ListofInvaild = ['.', ',', '!', '。', '，', '！', '？', '“', '”', '"', '的', '你', '我', '他', '哪些', '她', '偏', '哪', '到', '觉得', '也', '有', '是', '或者', '很']
 
 def extract_keywords(title):
     title = title.replace(' ', '')
@@ -38,25 +38,47 @@ if __name__ == '__main__':
 
     category_id_list = []
 
-    # sentence_list = []
-    # raw_data = pgs.get_json()
-    # for index in range(len(raw_data)):
-    #     tmp = dc.filter(raw_data[index][1])
-    #     if tmp == []:
-    #         continue
-    #     sentence_list += tmp
+    sentence_list = []
+    raw_data = pgs.get_json()
+    for index in range(len(raw_data)):
+        tmp = dc.filter(raw_data[index][1])
+        if tmp == []:
+            continue
+        listtmp = [raw_data[index][0], tmp, raw_data[index][2]]
+        sentence_list.append(listtmp)
 
     # 数据库分类处理
-    keywords = extract_keywords("气贯长虹 唯美 诗词 这是")
+    keywords = extract_keywords("读起来很唯美的句子")
     for key in keywords:
         db_ans = db.select_more("category", 'cname = "%s"' % key)
         if not db_ans:
-            print("%s 不在数据库中" % key)
             cid = db.count("category")
+            cid = cid + 1
             sql_op = dict()
-            sql_op['cid'] = '%s' % str(cid + 1)
+            sql_op['cid'] = '%s' % str(cid)
             sql_op['cname'] = '"%s"' % key
             sql_op['count'] = '0'
+            db.insert("category", sql_op)
             category_id_list.append(cid + 1)
+            logging.info("%s 被添加进入分类表 && id: %d" % (key, cid))
         else:
             category_id_list.append(int(db_ans[0]['cid']))
+
+        for content in sentence_list:
+            sql_op = dict()
+            sql_op['author'] = '"%s"' % content[0]
+            sql_op['hot'] = '%s' % content[2]
+            for text in content[1]:
+                id = db.count("sentence") + 1
+                sql_op['sid'] = '%s' % str(id)
+                sql_op['content'] = '"%s"' % text[0]
+                sql_op['howfrom'] = '"%s"' % text[1]
+                db.insert("sentence", sql_op)
+                logging.info(sql_op)
+                cate_op = dict()
+                cate_op['sentence_id'] = '%s' % str(id)
+                for key_index in category_id_list:
+                    cid = db.count("press_sentence") + 1
+                    cate_op['id'] = '%s' % str(cid)
+                    cate_op['category_id'] = '%s' % str(key_index)
+                    db.insert("press_sentence", cate_op)
