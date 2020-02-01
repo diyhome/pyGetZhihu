@@ -60,7 +60,7 @@ class GJson:
             if data['paging']['is_end']:
                 break
             json_url = data['paging']['next']
-            time.sleep(50)
+            time.sleep(5)
         return data_res
 
 if __name__ == '__main__':
