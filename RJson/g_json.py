@@ -8,6 +8,7 @@
 from urllib import request
 import logging
 import json
+import time
 
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"    # 日志格式化输出
 DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"                        # 日期格式
@@ -59,6 +60,7 @@ class GJson:
             if data['paging']['is_end']:
                 break
             json_url = data['paging']['next']
+            time.sleep(50)
         return data_res
 
 if __name__ == '__main__':
