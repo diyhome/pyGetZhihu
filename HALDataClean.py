@@ -1,11 +1,3 @@
-'''
-@Description: 
-@Author: diyhome
-@Gitee: https://gitee.com/jingjiangxueyuan_hmqs
-@Date: 2020-02-01 10:47:35
-@LastEditors  : diyhome
-@LastEditTime : 2020-02-01 11:05:50
-'''
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time : 2020/2/1 10:47
@@ -13,7 +5,6 @@
 # @Site : https://gitee.com/jingjiangxueyuan_hmqs/
 # @File : HALDataClean.py
 # @Software: PyCharm
-# 测试用
 
 import string
 from bs4 import BeautifulSoup
