@@ -181,5 +181,5 @@ if __name__ == '__main__':
     sql = Database()
     direct = {'sid': '1', 'content': "'ce shi xia zai' ", 'category': "'古风诗词'", 'howfrom': "'null'", 'hot': "6"}
     print(sql.connected)
-    print(sql.insert("sentence", direct))
-    print(sql.select_one('sentence', ''))
+    # print(sql.insert("sentence", direct))
+    print(sql.select_more('sentence', 'howfrom = "dasdsa"'))
