@@ -17,7 +17,7 @@
 
 import string
 from bs4 import BeautifulSoup
-from rJson.g_json import GJson
+from RJson.g_json import GJson
 
 
 class DataClean:

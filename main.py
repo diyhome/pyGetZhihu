@@ -7,7 +7,7 @@
 # @Software: PyCharm
 import jieba
 from HALDataClean import DataClean
-from rJson.g_json import GJson
+from RJson.g_json import GJson
 from db_opreate.op_sql import Database
 import logging
 import sys
