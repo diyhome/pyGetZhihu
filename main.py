@@ -59,7 +59,7 @@ if __name__ == '__main__':
             sentence_list.append(listtmp)
 
         # 数据库分类处理
-        keywords = extract_keywords("读起来很唯美的句子")
+        keywords = extract_keywords(pgs.page_title)
         for key in keywords:
             db_ans = db.select_more("category", 'cname = "%s"' % key)
             if not db_ans:
