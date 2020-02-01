@@ -3,7 +3,7 @@
 # @Time : 2020/2/1 10:23
 # @Author : diyhome
 # @Site : https://gitee.com/jingjiangxueyuan_hmqs/
-# @File : GJson.py
+# @File : rjson.py
 # @Software: PyCharm
 from urllib import request
 import logging
