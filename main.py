@@ -5,12 +5,17 @@
 # @Site : https://gitee.com/jingjiangxueyuan_hmqs/
 # @File : main.py
 # @Software: PyCharm
+import sys
+import os
+curPath = os.path.abspath(os.path.dirname(__file__))
+rootPath = os.path.split(curPath)[0]
+sys.path.append(rootPath)
+
 import jieba
 from HALDataClean import DataClean
 from RJson.g_json import GJson
 from db_opreate.op_sql import Database
 import logging
-import sys
 
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"    # 日志格式化输出
 DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"                        # 日期格式
