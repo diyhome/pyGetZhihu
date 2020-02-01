@@ -49,7 +49,7 @@ class GJson:
             json_raw = res.read().decode('utf-8')
             data = json.loads(json_raw)
             # 标题获取
-            self.page_title = data['data']['0']['question']['title']
+            self.page_title = data['data'][0]['question']['title']
             tmp = []
             for index in range(len(data['data'])):
                 tmp = self.__data_filter(data['data'][index])
