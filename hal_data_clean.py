@@ -6,6 +6,7 @@
 # @File : hal_data_clean.py
 # @Software: PyCharm
 import string
+from get_counter import get_text
 
 
 # 断句并且挑选
@@ -73,6 +74,7 @@ def main(ts):
     return list_sentence
 
 if __name__ == '__main__':
+    url = "https://www.zhihu.com/question/339011506"
     raw_data = get_text.get_json(url)
     for index in range(len(raw_data)):
         tmp = main(raw_data[index][1])

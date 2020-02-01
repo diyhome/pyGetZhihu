@@ -37,7 +37,7 @@ def get_json(url, offset=0):
         data = json.loads(json_raw)
         tmp = []
         for index in range(len(data['data'])):
-            tmp = data_cleaning(data['data'][index])
+            tmp = data_filter(data['data'][index])
             data_res.append(tmp)
         logging.debug("paging.is_end:" + str(data['paging']['is_end']))
         if data['paging']['is_end']:
@@ -46,7 +46,7 @@ def get_json(url, offset=0):
     return data_res
 
 # 数据选择
-def data_cleaning(raw_data):
+def data_filter(raw_data):
     # 如果回答中包含了图片,直接舍弃
     # if "img" in raw_data['content']:
     #     return
