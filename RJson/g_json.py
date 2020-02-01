@@ -29,7 +29,7 @@ class GJson:
         data_tmp.append(raw_data['content'])
         data_tmp.append(raw_data['voteup_count'])
         return data_tmp
-    def get_json(self, offset = 5):
+    def get_json(self, offset = 0):
         # 截取问题id
         qid = self.url.split('/')[-1]
 
@@ -60,3 +60,9 @@ class GJson:
                 break
             json_url = data['paging']['next']
         return data_res
+
+if __name__ == '__main__':
+    url = "https://www.zhihu.com/question/339011506"
+    gs = GJson(url)
+    mtp = gs.get_json()
+    print(mtp)
