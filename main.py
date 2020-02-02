@@ -63,37 +63,39 @@ if __name__ == '__main__':
         for key in keywords:
             db_ans = db.select_more("category", 'cname = "%s"' % key)
             if not db_ans:
-                cid = db.count("category")
-                cid = cid + 1
+                # cid = db.count("category")
+                # cid = cid + 1
                 sql_op = dict()
-                sql_op['cid'] = '%s' % str(cid)
+                # sql_op['cid'] = '%s' % str(cid)
                 sql_op['cname'] = '"%s"' % key
                 sql_op['count'] = '0'
                 db.insert("category", sql_op)
-                category_id_list.append(cid + 1)
-                logging.info("%s 被添加进入分类表 && id: %d" % (key, cid))
+                db_ans = db.select_more("category", 'cname = "%s"' % key)
+                category_id_list.append(int(db_ans[0]['cid']))
+                logging.info("%s 被添加进入分类表 && id: %d" % (key, int(db_ans[0]['cid'])))
             else:
                 category_id_list.append(int(db_ans[0]['cid']))
 
-            for content in sentence_list:
-                sql_op = dict()
-                sql_op['author'] = '"%s"' % content[0]
-                sql_op['hot'] = '%s' % content[2]
-                for text in content[1]:
-                    db_ans = db.select_more("sentence", 'content = "%s"' % text[0])
-                    if db_ans:
-                        logging.info("drop a data: " + text[0])
-                        continue
-                    id = db.count("sentence") + 1
-                    sql_op['sid'] = '%s' % str(id)
-                    sql_op['content'] = '"%s"' % text[0]
-                    sql_op['howfrom'] = '"%s"' % text[1]
-                    db.insert("sentence", sql_op)
-                    logging.info(sql_op)
-                    cate_op = dict()
-                    cate_op['sentence_id'] = '%s' % str(id)
-                    for key_index in category_id_list:
-                        cid = db.count("press_sentence") + 1
-                        cate_op['id'] = '%s' % str(cid)
-                        cate_op['category_id'] = '%s' % str(key_index)
-                        db.insert("press_sentence", cate_op)
+        for content in sentence_list:
+            sql_op = dict()
+            sql_op['author'] = '"%s"' % content[0]
+            sql_op['hot'] = '%s' % content[2]
+            for text in content[1]:
+                db_ans = db.select_more("sentence", 'content = "%s"' % text[0])
+                if db_ans:
+                    logging.info("drop a data: " + text[0])
+                    continue
+                # id = db.count("sentence") + 1
+                # sql_op['sid'] = '%s' % str(id)
+                sql_op['content'] = '"%s"' % text[0]
+                sql_op['howfrom'] = '"%s"' % text[1]
+                db.insert("sentence", sql_op)
+                sid = db.MAXID('sentence', 'sid')
+                # logging.info(sql_op)
+                cate_op = dict()
+                cate_op['sentence_id'] = '%s' % str(sid)
+                for key_index in category_id_list:
+                    # cid = db.count("press_sentence") + 1
+                    # cate_op['id'] = '%s' % str(cid)
+                    cate_op['category_id'] = '%s' % str(key_index)
+                    db.insert("press_sentence", cate_op)
