@@ -53,6 +53,8 @@ class DataClean:
                     list.append([self.sentence.lstrip("\n"), row])
                     self.sentence = ""
                     continue
+                if len(list) == 0:
+                    continue
                 list[len(list) - 1][1] = row
                 continue  # 句子出处,应该追加到上面那个地方
             else:
