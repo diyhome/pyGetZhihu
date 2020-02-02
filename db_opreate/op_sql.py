@@ -165,6 +165,16 @@ class Database:
             return cursor.fetchall()[0]['res']
         except pymysql.Error as e:
             return False
+    # 获取某一张表下索引的最大值
+    def MAXID(self, table, index):
+        sql = 'select MAX(%s) from %s' % (index, table)
+        try:
+            with self.__conn.cursor() as cursor:
+                cursor.execute(sql)
+            self.__conn.commit()
+            return cursor.fetchall()[0].get('MAX(%s)' % index)
+        except pymysql.Error as e:
+            return False
 
     # 销毁对象时关闭数据库连接
     def __del__(self):
