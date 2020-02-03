@@ -37,12 +37,18 @@ class DataClean:
             if remove_space.startswith(start_num):
                 row = row.lstrip(string.digits).lstrip(".").lstrip("、").lstrip("//").lstrip('。').lstrip(':').lstrip(';')
                 # 拆分
-                from_key = ['——', '———', '－－', '——']
-                for key in from_key:
-                    if key in row:
-                        row_tmp = row.split(key)
-                        list.append([row_tmp[0], row_tmp[-1]])
-                        continue
+                if '——' in row:
+                    row_tmp = row.split('——')
+                    list.append([row_tmp[0], row_tmp[-1]])
+                    continue
+                elif '———' in row:  # 真有奇葩打三个的
+                    row_tmp = row.split('———')
+                    list.append([row_tmp[0], row_tmp[-1]])
+                    continue
+                elif '－－' in row:  # 还有这种奇葩
+                    row_tmp = row.split('－－')
+                    list.append([row_tmp[0], row_tmp[-1]])
+                    continue
                 list.append([row, "NULL"])
                 # print("*"+row+"*")
                 continue
