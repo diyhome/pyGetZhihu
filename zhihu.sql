@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2020-02-02 05:08:15
+-- 生成日期： 2020-02-03 02:07:46
 -- 服务器版本： 10.4.11-MariaDB
 -- PHP 版本： 7.4.1
 
@@ -68,6 +68,7 @@ CREATE TABLE `sentence` (
 -- 表的索引 `category`
 --
 ALTER TABLE `category`
+  ADD PRIMARY KEY (`cid`),
   ADD KEY `cid` (`cid`);
 
 --
@@ -82,6 +83,7 @@ ALTER TABLE `press_sentence`
 -- 表的索引 `sentence`
 --
 ALTER TABLE `sentence`
+  ADD PRIMARY KEY (`sid`),
   ADD KEY `sid` (`sid`);
 
 --
