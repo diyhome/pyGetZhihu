@@ -35,7 +35,7 @@ class DataClean:
             start_num = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
             # 句子开头拼接
             if remove_space.startswith(start_num):
-                row = row.lstrip(string.digits).lstrip(".").lstrip("、").lstrip("//").lstrip()
+                row = row.lstrip(string.digits).lstrip(".").lstrip("、").lstrip("//").lstrip('。').lstrip(':').lstrip(';')
                 # 拆分
                 from_key = ['——', '———', '－－', '——']
                 for key in from_key:
