@@ -81,7 +81,7 @@ if __name__ == '__main__':
             sql_op['author'] = '"%s"' % content[0]
             sql_op['hot'] = '%s' % content[2]
             for text in content[1]:
-                db_ans = db.select_more("sentence", 'content = "%s"' % text[0])
+                db_ans = db.select_more("sentence", 'content REGEXP "%s"' % text[0])
                 if db_ans:
                     logging.info("drop a data: " + text[0])
                     continue
