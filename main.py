@@ -88,7 +88,7 @@ if __name__ == '__main__':
                 # id = db.count("sentence") + 1
                 # sql_op['sid'] = '%s' % str(id)
                 sql_op['content'] = '"%s"' % text[0]
-                sql_op['howfrom'] = '"%s"' % text[1]
+                sql_op['howfrom'] = '"%s"' % text[1].replace('—', '').replace('－', '')
                 db.insert("sentence", sql_op)
                 sid = db.MAXID('sentence', 'sid')
                 # logging.info(sql_op)
