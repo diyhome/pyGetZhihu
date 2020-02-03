@@ -87,6 +87,8 @@ if __name__ == '__main__':
                     continue
                 # id = db.count("sentence") + 1
                 # sql_op['sid'] = '%s' % str(id)
+                if '—' in text[0] or '－' in text[0]:
+                    continue
                 sql_op['content'] = '"%s"' % text[0]
                 sql_op['howfrom'] = '"%s"' % text[1].replace('—', '').replace('－', '')
                 db.insert("sentence", sql_op)
